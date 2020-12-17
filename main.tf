@@ -35,7 +35,7 @@ variable "network_id" {
 }
 
 variable "subnet_id" {
-  description = "(Optional) - HC Subnet ID to create cluster in. Required Required when create_network variable is set to true"
+  description = "(Optional) - HC Subnet ID to create cluster in. Required when create_network variable is set to true"
   type = string
   
 }
