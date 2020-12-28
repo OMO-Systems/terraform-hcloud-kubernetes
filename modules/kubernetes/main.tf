@@ -4,7 +4,6 @@ locals {
   connections       = concat(var.master_nodes, var.worker_nodes).*.ipv4_address
   master_ip         = element(var.master_nodes.*.ipv4_address, 0)
   master_private_ip = var.private_ips[0]
-  worker_private_ip = var.private_ips[1]
 }
 
 resource "null_resource" "install" {
@@ -93,7 +92,6 @@ data "template_file" "master" {
     kubernetes_version = var.kubernetes_version
     master_ip          = local.master_ip
     cluster_name       = var.cluster_name
-    private_ip         = local.master_private_ip
   }
 }
 
