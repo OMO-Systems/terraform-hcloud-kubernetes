@@ -13,7 +13,7 @@ variable "hcloud_token" {
 
 variable "hcloud_ssh_keys" {
   description = "(Required) - SSH key IDs or names which should be injected into the server at creation time."
-  type        = list
+  type        = list(any)
 }
 
 variable "location" {
@@ -23,6 +23,23 @@ variable "location" {
 }
 
 # NETWORK
+variable "create_network" {
+  description = "(Required) - Create network? When true new vpc created"
+  type = bool
+}
+
+variable "network_id" {
+  description = "(Optional) - HC Network ID to create cluster in. Required when create_network variable is set to true"
+  type = string
+  default = ""
+}
+
+variable "subnet_id" {
+  description = "(Optional) - HC Subnet ID to create cluster in. Required Required when create_network variable is set to true"
+  type = string
+  
+}
+
 variable "network_zone" {
   description = "(Optional) - Name of network zone, e.g. 'eu-central'."
   type        = string
@@ -86,8 +103,11 @@ module "cluster" {
   cluster_name     = var.cluster_name
   location         = var.location
   image            = var.image
+  create_network   = var.create_network
+  network_id       = var.network_id
   network_zone     = var.network_zone
   network_ip_range = var.network_ip_range
+  subnet_id        = var.subnet_id
   subnet_ip_range  = var.subnet_ip_range
   master_type      = var.master_type
   master_count     = var.master_count
@@ -127,4 +147,24 @@ output "master_nodes" {
 
 output "worker_nodes" {
   value = module.cluster.worker_nodes.*.ipv4_address
+}
+
+output "kubeconfig" {
+  value = module.kubernetes.kubeconfig
+}
+
+output "endpoint" {
+  value = module.kubernetes.endpoint
+}
+
+output "certificate_authority_data" {
+  value = module.kubernetes.certificate_authority_data
+}
+
+output "client_certificate_data" {
+  value = module.kubernetes.client_certificate_data
+}
+
+output "client_key_data" {
+  value = module.kubernetes.client_key_data
 }
