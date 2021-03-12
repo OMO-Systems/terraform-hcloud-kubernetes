@@ -13,6 +13,10 @@ variable "cluster_name" {
   type = string
 }
 
+variable "ha_cluster" {
+  type = bool
+}
+
 variable "location" {
   type = string
 }

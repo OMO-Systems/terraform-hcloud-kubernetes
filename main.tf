@@ -22,6 +22,12 @@ variable "location" {
   default     = "nbg1"
 }
 
+variable "ha_cluster" {
+  description = "(Optional) - Deploy highly available k8s cluster. When true master and worker nodes deployed to different locations"
+  type = bool
+  default = false
+}
+
 # NETWORK
 variable "create_network" {
   description = "(Required) - Create network? When true new vpc created"

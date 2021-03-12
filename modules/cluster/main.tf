@@ -5,10 +5,13 @@ locals {
   servers      = concat(hcloud_server.master_node, hcloud_server.worker_node)
 }
 
+data "hcloud_locations" "this" {
+}
+
 resource "hcloud_server" "master_node" {
   count       = var.master_count
   name        = "master-${count.index + 1}"
-  location    = var.location
+  location    = var.ha_cluster ? element(data.hcloud_locations.this.names, count.index) : var.location
   image       = var.image
   server_type = var.master_type
   ssh_keys    = var.hcloud_ssh_keys
@@ -41,7 +44,7 @@ resource "hcloud_server" "master_node" {
 resource "hcloud_server" "worker_node" {
   count       = var.worker_count
   name        = "worker-${count.index + 1}"
-  location    = var.location
+  location    = var.ha_cluster ? element(data.hcloud_locations.this.names, count.index) : var.location
   image       = var.image
   server_type = var.worker_type
   ssh_keys    = var.hcloud_ssh_keys
