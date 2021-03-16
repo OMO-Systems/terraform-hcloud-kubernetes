@@ -6,7 +6,7 @@ output "private_ips" {
 }
 
 output "private_network_interface" {
-  value = "enp7s0"
+  value = "ens10"
 }
 
 output "all_nodes" {
