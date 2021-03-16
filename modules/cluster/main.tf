@@ -41,6 +41,8 @@ resource "hcloud_server" "master_node" {
   }
 }
 
+#TODO: Add loadbalancer to 6443 if ha_master
+
 resource "hcloud_server" "worker_node" {
   count       = var.worker_count
   name        = "worker-${count.index + 1}"

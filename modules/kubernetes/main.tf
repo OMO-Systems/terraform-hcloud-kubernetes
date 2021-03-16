@@ -171,3 +171,4 @@ module "client_key_data" {
     ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
       root@${local.master_ip} 'kubectl config --kubeconfig /root/.kube/config view --flatten -o jsonpath='{.users[0].user.client-key-data}''
   EOT
+}
